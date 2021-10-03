@@ -101,7 +101,7 @@ function takeSpin() {
 								document.getElementById("S" + (i + 1)).innerHTML = "";
 								document.getElementById("S" + (i + 1)).style.backgroundImage = "url('./img/coinslot.gif')";
 								score += 1000;
-								document.getElementById("scoredisplay").innerHTML = score;
+								flashAndUpdateScore(400);
 							} else {
 								mPlay("slot" + (i + 1) + "_snd");
 								document.getElementById("S" + (i + 1)).innerHTML = "";
@@ -115,7 +115,7 @@ function takeSpin() {
 									setTimeout(function () {
 										document.getElementById("devil").style.display = "none";
 										mPlay("scorereduce_snd");
-										document.getElementById("scoredisplay").innerHTML = score;
+										flashAndUpdateScore(400);
 									}, 2500)
 
 								}, 1400)
@@ -128,7 +128,7 @@ function takeSpin() {
 								document.getElementById("S" + (i + 1)).innerHTML = "";
 								document.getElementById("S" + (i + 1)).style.backgroundImage = "url('./img/coinslot.gif')";
 								score += 1000;
-								document.getElementById("scoredisplay").innerHTML = score;
+								flashAndUpdateScore(400);
 							} else {
 
 								mPlay("slot" + (i + 1) + "_snd");
@@ -158,7 +158,7 @@ function takeSpin() {
 							document.getElementById("S" + (i + 1)).innerHTML = "";
 							document.getElementById("S" + (i + 1)).style.backgroundImage = "url('./img/coinslot.gif')";
 							score += 1000;
-							document.getElementById("scoredisplay").innerHTML = score;
+							flashAndUpdateScore(400);
 							mPlay("coin");
 						} else if (csmb > 4) {
 							mPlay("slot" + (i + 1) + "_snd");
@@ -244,6 +244,7 @@ function scoring(col, row) {
 
 	/* This function sucks shit. */
 	score += 200;
+	flashAndUpdateScore(400);
 
 	totals[0] = boardArray[0][0] + boardArray[0][1] + boardArray[0][2] + boardArray[0][3] + boardArray[0][4]
 	totals[1] = boardArray[1][0] + boardArray[1][1] + boardArray[1][2] + boardArray[1][3] + boardArray[1][4]
@@ -283,7 +284,7 @@ function scoring(col, row) {
 			}
 		}, 2500)
 	} else {
-		document.getElementById("scoredisplay").innerHTML = score;
+		flashAndUpdateScore(400);
 	}
 
 	if (slingos[0] + slingos[1] + slingos[2] + slingos[3] + slingos[4] + slingos[5] + slingos[6] + slingos[7] + slingos[8] + slingos[9] + slingos[10] + slingos[11] == -12) {
@@ -383,7 +384,6 @@ function endGame(mode) {
 		setTimeout(function () {
 			game_end_called = 1;
 			document.getElementById("timedisplay").innerHTML = "";
-			clearInterval(timer);
 			var bonus = calcFCBonus(spin);
 			document.getElementById("startspinbtn").style.display = "none";
 			score += bonus;
@@ -403,6 +403,20 @@ function endGame(mode) {
 		document.getElementById("fullcard").style.display = "none";
 		document.getElementById("gameover").style.display = "block";
 		gameReset();
+	} else if (mode == 3 && game_end_called == 0) { /* Not enough points for a free spin */
+		setTimeout(function () {
+			game_end_called = 1;
+			var bonus = calcFCBonus(spin);
+			document.getElementById("startspinbtn").style.display = "none";
+			document.getElementById("notenoughpts").style.display = "block";
+			setTimeout(function () {
+				mPlay("gameover_snd");
+				document.getElementById("notenoughpts").style.display = "none";
+				document.getElementById("gameover").style.display = "block";
+				document.getElementById("startgamebtn").style.display = "block";
+				gameReset();
+			}, 5000)
+		}, 2500)
 	}
 }
 
@@ -629,4 +643,16 @@ function rulesBtnClick() {
 		document.getElementById("rulesbtn").style.backgroundImage = "url('./img/rulesbtn_down.gif')";
 		document.getElementById("rulesoverlay").style.display = "block";
 	}
+}
+
+function flashAndUpdateScore(duration) {
+	document.getElementById("scoredisplay").innerHTML = score;
+	document.getElementById("scoredisplay").style.border = "solid red 1px";
+	document.getElementById("scoredisplay").style.top = "81px";
+	document.getElementById("scoredisplay").style.left = "33px";
+	setTimeout(function () {
+		document.getElementById("scoredisplay").style.border = "none";
+		document.getElementById("scoredisplay").style.top = "82px";
+		document.getElementById("scoredisplay").style.left = "34px";
+	}, duration)
 }
