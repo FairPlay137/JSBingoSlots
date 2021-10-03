@@ -44,6 +44,10 @@ var tempnum = 0;
 var valid = 0;
 var game_end_called = 0;
 
+var fcblinktimer;
+var fcblinksleft = 5;
+var fcBlinkOn = false;
+
 function newBoard() {
 	document.getElementById("gameover").style.display = "none";
 	document.getElementById("scoredisplay").innerHTML = score;
@@ -378,22 +382,18 @@ function endGame(mode) {
 	if (mode == 1) {
 		setTimeout(function () {
 			game_end_called = 1;
+			document.getElementById("timedisplay").innerHTML = "";
+			clearInterval(timer);
 			var bonus = calcFCBonus(spin);
 			document.getElementById("startspinbtn").style.display = "none";
-			document.getElementById("fullcard").style.display = "block";
 			score += bonus;
-			document.getElementById("bonuspntdisplay").style.display = "block";
-			document.getElementById("bonuspntdisplay").innerHTML = bonus;
 			document.getElementById("scoredisplay").innerHTML = score;
 			mPlay("fc_snd");
-			setTimeout(function () {
-				mPlay("gameover_snd");
-				document.getElementById("fullcard").style.display = "none";
-				document.getElementById("bonuspntdisplay").style.display = "none";
-				document.getElementById("gameover").style.display = "block";
-				document.getElementById("startgamebtn").style.display = "block";
-				gameReset();
-			}, 5000)
+			mPlay("applause_snd");
+			fcBlinkOn = false;
+			fcblinksleft = 5;
+			fcTimerTick();
+			fcblinktimer = setInterval(fcTimerTick, 500);
 		}, 2500)
 
 	} else if (mode == 2 && game_end_called == 0) { /* Out of Spins */
@@ -570,5 +570,63 @@ function freeSpinAnswer(val) {
 		document.getElementById("nobtn").style.display = "none";
 		document.getElementById("scoredisplay").innerHTML = score;
 		startNextSpin();
+	}
+}
+
+function fcTimerTick() {
+	var bgimage = "url('./img/coveredtile_fcblink.gif')";
+	if (fcBlinkOn) {
+		bgimage = "url('./img/coveredtile.gif')";
+		fcBlinkOn = false;
+	} else {
+		fcBlinkOn = true;
+		if(fcblinksleft > 0) {
+			mPlay("fc_slingo_snd");
+			fcblinksleft--;
+		} else {
+			clearInterval(fcblinktimer);
+			var bonus = calcFCBonus(spin);
+			document.getElementById("bonuspntdisplay").style.display = "block";
+			document.getElementById("bonuspntdisplay").innerHTML = bonus;
+			document.getElementById("fullcard").style.display = "block";
+			setTimeout(function () {
+				mPlay("gameover_snd");
+				document.getElementById("fullcard").style.display = "none";
+				document.getElementById("bonuspntdisplay").style.display = "none";
+				document.getElementById("gameover").style.display = "block";
+				document.getElementById("startgamebtn").style.display = "block";
+				gameReset();
+			}, 3000)
+			bgimage = "url('./img/coveredtile.gif')";
+		}
+	}
+	for (var i = 0; i < 5; i++) {
+		for (var j = 0; j < 5; j++) {
+			document.getElementById(boardIDs[i][j]).style.backgroundImage = bgimage;
+		}
+	}
+}
+
+function restartBtnClick() {
+	/* This function sucks shit and doesn't work right in some scenarios */
+	if(isgameover === 0) {
+		document.getElementById("restartbtn").style.backgroundImage = "url('./img/restartbtn_down.gif')";
+		setTimeout(function () {
+			document.getElementById("restartbtn").style.backgroundImage = "url('./img/restartbtn.gif')";
+		}, 200)
+		isgameover = 1;
+		endGame(2);
+	} else {
+		mPlay("invalid_snd");
+	}
+}
+
+function rulesBtnClick() {
+	if(document.getElementById("rulesoverlay").style.display == "block") {
+		document.getElementById("rulesbtn").style.backgroundImage = "url('./img/rulesbtn.gif')";
+		document.getElementById("rulesoverlay").style.display = "none";
+	} else {
+		document.getElementById("rulesbtn").style.backgroundImage = "url('./img/rulesbtn_down.gif')";
+		document.getElementById("rulesoverlay").style.display = "block";
 	}
 }

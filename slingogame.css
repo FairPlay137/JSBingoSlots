@@ -190,6 +190,26 @@
 	background-image:url('./img/nobtn.gif');
 }
 
+#rulesbtn{
+	position:absolute;
+	top:290px;
+	left:36px;
+	width: 80px;
+	height:25px;
+	background-image:url('./img/rulesbtn.gif');
+	cursor: pointer;
+}
+
+#restartbtn{
+	position:absolute;
+	top:327px;
+	left:36px;
+	width: 80px;
+	height:25px;
+	background-image:url('./img/restartbtn.gif');
+	cursor: pointer;
+}
+
 #yesbtn:active{ background-image:url('./img/yesbtn_down.gif') }
 #nobtn:active{ background-image:url('./img/nobtn_down.gif') }
 
@@ -263,4 +283,16 @@
 	left:186;
 	width:360px;
 	height:67px
+}
+
+#rulesoverlay{
+	background-image:url('./img/rulesbg.gif');
+	padding: 6px;
+	width:351px;
+	height:252px;
+}
+
+#rulesoverlay iframe {
+	width: 347px;
+	height:248px;
 }

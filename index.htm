@@ -57,17 +57,22 @@
 <div ID="startspinbtn" onclick="takeSpin();"></div>
 <div ID="disabledspinbtn"></div>
 <div ID="startgamebtn" onclick="startGame();"></div>
-<div ID="restartbtn"></div>
+<div ID="rulesbtn" onclick="rulesBtnClick();"></div>
+<div ID="restartbtn" onclick="restartBtnClick();"></div>
 <div ID="testbtn" onclick="newBoard();"></div>
 <div ID="scoredisplay">0</div>
 <div ID="spindisplay">0</div>
 <div ID="freespindisplay">0</div>
 <div ID="bonuspntdisplay">88,888</div>
+<div ID="timedisplay"></div>
 
 <audio id="click" src="./sounds/click.wav" preload="auto"></audio>
 <audio id="spinclick_snd" src="./sounds/spinclick.wav" preload="auto"></audio>
 <audio id="filltile_snd" src="./sounds/filltile.wav" preload="auto"></audio>
-<audio id="slingo_snd" src="./sounds/slingo2.wav" preload="auto"></audio>
+<audio id="slingo_snd" src="./sounds/slingox1.wav" preload="auto"></audio>
+<audio id="doubleslingo_snd" src="./sounds/slingox2.wav" preload="auto"></audio>
+<audio id="tripleslingo_snd" src="./sounds/slingox3.wav" preload="auto"></audio>
+<audio id="quadrupleslingo_snd" src="./sounds/slingox4.wav" preload="auto"></audio>
 <audio id="invalid_snd" src="./sounds/invalid.wav" preload="auto"></audio>
 <audio id="coin" src="./sounds/goldcoin.wav" preload="auto"></audio>
 <audio id="slot1_snd" src="./sounds/slot1.wav" preload="auto"></audio>
@@ -82,6 +87,11 @@
 <audio id="gameover_snd" src="./sounds/gameover.wav" preload="auto"></audio>
 <audio id="fc_snd" src="./sounds/fc.wav" preload="auto"></audio>
 <audio id="freespin_snd" src="./sounds/freespin.wav" preload="auto"></audio>
+<audio id="jokerbonus_snd" src="./sounds/jokerbonus.wav" preload="auto"></audio>
+<audio id="tileappear1_snd" src="./sounds/tileappear.wav" preload="auto"></audio>
+<audio id="tileappear2_snd" src="./sounds/tileappear.wav" preload="auto"><!-- dumb hack --></audio>
+<audio id="applause_snd" src="./sounds/applause.wav" preload="auto"></audio>
+<audio id="fc_slingo_snd" src="./sounds/slingo.wav" preload="auto"></audio>
 
 <div id="slingo1" class="vertslingos"></div>
 <div id="slingo2" class="vertslingos"></div>
@@ -99,12 +109,16 @@
 <img src="./img/devil.gif" alt="" ID="devil" class="overlay">
 <img src="./img/csmb.gif" alt="" ID="csmb" class="overlay">
 <img src="./img/fc.gif" alt="" ID="fullcard" class="overlay">
+<img src="./img/jokerbonus3.gif" alt="" ID="jokerbonus" class="overlay">
+<img src="./img/jokerbonus4.gif" alt="" ID="jokerbonus" class="overlay">
+<img src="./img/jokerbonus5.gif" alt="" ID="jokerbonus" class="overlay">
 <img src="./img/gameover.gif" alt="" ID="gameover" class="overlay">
 <img src="./img/finalspins4.gif" alt="" ID="finalspins4" class="overlay">
 <img src="./img/finalspins3.gif" alt="" ID="finalspins3" class="overlay">
 <img src="./img/finalspins2.gif" alt="" ID="finalspins2" class="overlay">
 <img src="./img/finalspins1.gif" alt="" ID="finalspins1" class="overlay">
 <img src="./img/freespinq.gif" alt="" ID="freespinq" class="questionelements">
+<div ID="rulesoverlay" class="overlay"><iframe src="./help.htm">Use a more up-to-date web browser to view help. Seems like this one doesn't support iframes.</iframe></div>
 <div ID="yesbtn" class="questionelements" onclick="freeSpinAnswer(true);"></div>
 <div ID="nobtn" class="questionelements" onclick="freeSpinAnswer(false);"></div>
 <div ID="bonuspntdisplay"></div>
